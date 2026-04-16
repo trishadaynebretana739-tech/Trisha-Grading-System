@@ -194,16 +194,20 @@ Infotech Student Grading System
 <h2>Student Grades</h2>
 
 <table>
-
 <thead>
 <tr>
-<th>Subject</th>
+<th>Category</th>
 <th>Grade</th>
 </tr>
 </thead>
 
-<tbody id="gradeBody"></tbody>
-
+<tbody>
+<tr><td>Quiz (20%)</td><td><input type="number" id="quiz"></td></tr>
+<tr><td>Laboratory (30%)</td><td><input type="number" id="lab"></td></tr>
+<tr><td>Assignment (10%)</td><td><input type="number" id="assign"></td></tr>
+<tr><td>Attendance (10%)</td><td><input type="number" id="attend"></td></tr>
+<tr><td>Major Exam (30%)</td><td><input type="number" id="exam"></td></tr>
+</tbody>
 </table>
 
 <button class="view" onclick="viewGrades()">View Grades</button>
@@ -216,7 +220,7 @@ Infotech Student Grading System
 
 <script>
 
-let subjects=["IAS 302","SA 301","IT ELECT 4","CAPSTONE 1"];
+let subjects=["Quiz (20%)","Laboratory (30)","Assignment (10%)","Attendance (10%)","Major Exam (30%)"];
 
 function loadSubjects(){
 
@@ -294,17 +298,32 @@ function viewGrades(){
 let name=document.getElementById("studentName").value;
 let section=document.getElementById("section").value;
 
+let quiz=parseFloat(document.getElementById("quiz").value) || 0;
+let lab=parseFloat(document.getElementById("lab").value) || 0;
+let assign=parseFloat(document.getElementById("assign").value) || 0;
+let attend=parseFloat(document.getElementById("attend").value) || 0;
+let exam=parseFloat(document.getElementById("exam").value) || 0;
+
+// COMPUTATION
+let finalGrade = 
+(quiz * 0.20) +
+(lab * 0.30) +
+(assign * 0.10) +
+(attend * 0.10) +
+(exam * 0.30);
+
+// OUTPUT
 let result=`<h3>Student Record</h3>`;
 result+=`Name: <b>${name}</b><br>`;
 result+=`Section: <b>${section}</b><br><br>`;
 
-subjects.forEach((sub,index)=>{
+result+=`Quiz: ${quiz}<br>`;
+result+=`Laboratory: ${lab}<br>`;
+result+=`Assignment: ${assign}<br>`;
+result+=`Attendance: ${attend}<br>`;
+result+=`Major Exam: ${exam}<br><br>`;
 
-let grade=document.getElementById("grade"+index).value || "No Grade";
-
-result+=`${sub}: <b>${grade}</b><br>`;
-
-});
+result+=`<h2>Final Grade: ${finalGrade.toFixed(2)}</h2>`;
 
 document.getElementById("result").innerHTML=result;
 
